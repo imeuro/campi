@@ -20,6 +20,7 @@ php_errorlog
 
 /wp-content/plugins/*
 !/wp-content/plugins/campi-in-rete/
+/wp-content/plugins/campi-in-rete/inc/_api.php
 
 /wp-content/themes/index.php
 /wp-content/themes/twenty*/

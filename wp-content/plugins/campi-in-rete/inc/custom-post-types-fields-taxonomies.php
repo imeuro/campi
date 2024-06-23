@@ -170,10 +170,4 @@ function wpdocs_register_my_custom_menu_page() {
 }
 add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
 
-// GMAPS API key [custom feld in BE]
-function my_acf_google_map_api( $api ){
-    $api['key'] = 'AIzaSyBg6edw-g51IXd8gFxaMH0tkMpC1ZqLGls';
-    return $api;
-}
-add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 

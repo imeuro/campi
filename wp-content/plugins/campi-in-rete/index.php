@@ -14,5 +14,6 @@ Author URI: https://meuro.dev/
 if( ! defined( 'ABSPATH') ) { exit; }
 
 include('inc/custom-post-types-fields-taxonomies.php');
+include('inc/_api.php');
 
 
