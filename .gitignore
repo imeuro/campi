@@ -1,5 +1,6 @@
 *.log
 *.sql
+*.zip
 php_errorlog
 .DS_Store
 
