@@ -29,20 +29,17 @@
 				$data_opera = $sep1.$data_start.$sep2.$data_end;
 
 			}
+
 			the_title( '<h1 class="entry-title"><em>', '</em>'.$data_opera.'</h1>' );
 
 			$materiale = get_field('materiale_dimensioni',$post->ID);
 			echo "<span>$materiale</span>";		
-
-
 		} else {
 			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		}
 		?>
 
 	</header><!-- .entry-header -->
-
-	<?php campi_post_thumbnail(); ?>
 
 	<div class="entry-content">
 		<?php
@@ -61,15 +58,35 @@
 			)
 		);
 
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'campi' ),
-				'after'  => '</div>',
-			)
-		);
 		?>
 	</div><!-- .entry-content -->
 
+	<?php
+		$commissione = get_field('commissione',$post->ID);
+		$restauro = get_field('restauro',$post->ID);
+		$bibliografia_specifica = get_field('bibliografia_specifica',$post->ID);
+		
+		if ($commissione) {
+			echo '<section id="commissione" class="entry-content additional">';
+			echo '<h2 class="section-heading">Commissione</h2>';
+			echo $commissione;
+			echo '</section>';
+		}
+		if ($restauro) {
+			echo '<section id="restauro" class="entry-content additional">';
+			echo '<h2 class="section-heading">Restauro</h2>';
+			echo $restauro;
+			echo '</section>';
+		}
+		if ($bibliografia_specifica) {
+			echo '<section id="bibliografia_specifica" class="entry-content additional">';
+			echo '<h2 class="section-heading">Bibliografia specifica</h2>';
+			echo $bibliografia_specifica;
+			echo '</section>';
+		}
+
+
+	?>
 	<footer class="entry-footer">
 		<?php campi_entry_footer(); ?>
 	</footer><!-- .entry-footer -->

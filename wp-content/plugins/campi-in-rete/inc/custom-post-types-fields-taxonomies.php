@@ -127,7 +127,7 @@ function campi_register_tax_luoghi() {
         "show_in_menu" => false,
         "show_in_nav_menus" => false,
         "query_var" => true,
-        "rewrite" => [ 'slug' => 'luoghi', 'with_front' => true, ],
+        "rewrite" => [ 'slug' => 'luoghi', 'with_front' => true, 'hierarchical' => true ],
         "show_admin_column" => false,
         "show_in_rest" => true,
         "show_tagcloud" => false,

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sprite viewer</title>
+    <style type="text/css">
+        body { padding:0; margin:0 }
+        .flex-cont {
+            display: inline-grid;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+            font-size: 12px;
+            color: #444;
+            font-family: monospace;
+            grid-gap: 5px;
+            margin: 20px;
+            width: 125px;
+            max-width: 20%;
+            text-align: center;
+            padding: 10px;
+        }
+        .flex-cont:hover { background-color: #ccc; }
+    </style>
+</head>
+<body>
+<div id="icons"></div>
+<script>
+let icons = document.getElementById('icons');
+let rnd = Math.random() * 100000;
+//fetch("https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/tiger.svg")
+fetch("./campi-sprite.svg?cb="+rnd)
+.then(response => response.text())
+.then(svg => icons.insertAdjacentHTML("afterbegin", svg))
+.then(() => {
+    const sprite = icons.querySelector("#campi-sprite");
+    console.debug(sprite);
+    const symbols = sprite.querySelectorAll("symbol");
+
+    symbols.forEach(symbol => {
+      document.body.insertAdjacentHTML("beforeend", `
+        <div class="flex-cont">
+          <svg width="50" height="50">
+             <use xlink:href="./campi-sprite.svg?cb=${rnd}#${symbol.id}" />
+          </svg>
+          <span>${symbol.id}</span>
+        </div>
+        `)
+    });
+
+});
+</script>
+</body>
+</html>
+
+
+

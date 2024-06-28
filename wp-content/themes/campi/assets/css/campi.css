@@ -90,14 +90,15 @@ a:visited {
 }
 .container #primary {
 	max-width: 100%;
-    padding-top: 70px;
+    padding-top: 90px;
 }
 article .entry-header {
-	font-size: 24px;
+	font-size: 26px;
 	font-weight: 500;
+	line-height: 1.33;
 }
 article .entry-content {
-    line-height: 1.33;
+    line-height: 1.25;
 }
 article .entry-content p,
 article .entry-content figure { margin-bottom:  var(--spacer-unit); }
@@ -116,25 +117,72 @@ article .entry-content figure.alignfull {
 	.container #post-navigation {
 		display: block;
 		position: sticky;
-		top: 95px;
-		flex: 0 0 300px;
+		top: 140px;
+		flex: 0 0 250px;
+		height: 33vh;
 	}
 	.container #primary {
-		flex: 0 0 calc(100% - 300px - var(--spacer-unit));
-		max-width: calc(100% - 320px);
+		flex: 0 0 calc(100% - 350px - var(--spacer-unit));
+		max-width: calc(100% - 370px);
+    	padding-top: 110px;
+
+	}
+	article .entry-header {
+		font-size: 30px;
 	}
 	article .entry-content {
-		width: 640px;
-		max-width: calc(100% - 320px);
+		width: 768px;
+		max-width: calc(100% - 250px);
 		font-size: 18px;
 		font-size: calc(75% + .5vw);
-		line-height: 1.75;
+		line-height: 1.5;
+		margin-bottom: calc(var(--spacer-unit)* 5);
 	}
 	article .entry-content figure.alignwide,
 	article .entry-content figure.alignfull {
-		left: calc(-300px - var(--spacer-unit)* 2);
+		left: calc(-350px - var(--spacer-unit)* 2);
 	}
 
+	article .entry-content .section-heading {
+		font-weight: 600;
+		border-bottom: 1px solid rgb(var(--nero));
+		padding-bottom: calc(var(--spacer-unit)* .5);
+		margin-bottom: var(--spacer-unit);
+	}
+
+	#post-navigation .aside-location, 
+	#post-navigation .aside-navi {
+	    width: 100%;
+	    flex-flow: column;
+	    align-items: center;
+	    justify-content: space-around;
+	}
+	.aside-location-name a {
+	    font-size: 14px;
+	    text-decoration: none;
+	    padding: calc(var(--spacer-unit)* .5) 0 0 0;
+	}
+	.aside-location-name.level_0 a {
+	    font-size: 18px;
+	    text-decoration: underline;
+	    padding: calc(var(--spacer-unit)* .5) 0 0 0;
+	}
+
+	.aside-navi {
+		position: absolute;
+		bottom: 0;
+		border-top: 1px solid rgb(var(--nero));
+	}
+
+	.aside-navi .aside-link {
+		border-bottom: 1px solid rgb(var(--nero));
+        padding: calc(var(--spacer-unit)* 0.5) 0;
+        width: 100%;
+	}
+	.aside-navi .aside-link a {
+		font-weight: 600;
+		text-decoration: none;
+	}
 }
 
 
