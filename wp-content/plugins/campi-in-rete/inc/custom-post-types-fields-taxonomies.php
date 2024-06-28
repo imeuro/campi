@@ -74,7 +74,7 @@ function campi_register_tax_autori() {
         "labels" => $labels,
         "public" => true,
         "publicly_queryable" => true,
-        "hierarchical" => false,
+        "hierarchical" => true,
         "show_ui" => true,
         "show_in_menu" => false,
         "show_in_nav_menus" => false,

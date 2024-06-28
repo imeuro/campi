@@ -45,6 +45,7 @@ function campi_setup() {
 		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		*/
 	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'align-wide' );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
@@ -70,49 +71,10 @@ function campi_setup() {
 		)
 	);
 
-	// Set up the WordPress core custom background feature.
-	add_theme_support(
-		'custom-background',
-		apply_filters(
-			'campi_custom_background_args',
-			array(
-				'default-color' => 'ffffff',
-				'default-image' => '',
-			)
-		)
-	);
 
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
-
-	/**
-	 * Add support for core custom logo.
-	 *
-	 * @link https://codex.wordpress.org/Theme_Logo
-	 */
-	add_theme_support(
-		'custom-logo',
-		array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		)
-	);
 }
 add_action( 'after_setup_theme', 'campi_setup' );
 
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
- */
-function campi_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'campi_content_width', 640 );
-}
-add_action( 'after_setup_theme', 'campi_content_width', 0 );
 
 /**
  * Register widget area.
@@ -137,22 +99,44 @@ add_action( 'widgets_init', 'campi_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
+function add_async_forscript($url)
+{
+    if (strpos($url, '#asyncload')===false)
+        return $url;
+    else
+        return str_replace('#asyncload', '', $url)."' async='async";
+}
+add_filter('clean_url', 'add_async_forscript', 11, 1);
+
+function add_defer_forscript( $tag, $handle, $src ) {
+  $defer = array( 
+  	'caw_2024-navigation',
+    'caw_2024-mapbox'
+  );
+  if ( in_array( $handle, $defer ) ) {
+     return '<script src="' . $src . '" defer type="text/javascript"></script>' . "\n";
+  }
+    
+    return $tag;
+} 
+add_filter( 'script_loader_tag', 'add_defer_forscript', 10, 3 );
+
 function campi_scripts() {
 	wp_enqueue_style( 'campi-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'campi-style', 'rtl', 'replace' );
+    wp_enqueue_style( 'campi-style-custom', get_template_directory_uri() . '/assets/css/campi.css', array(), _S_VERSION );
 
-	wp_enqueue_script( 'campi-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+	if (is_home() || is_front_page()) {
+		wp_enqueue_script( 'campi-mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js', array(), _S_VERSION, true );
+		wp_enqueue_style( 'campi-mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css', array(), _S_VERSION );
 	}
+
+	wp_enqueue_script( 'campi-general', get_template_directory_uri() . '/assets/js/campi.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'campi-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true );
+
 }
 add_action( 'wp_enqueue_scripts', 'campi_scripts' );
 
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -165,14 +149,55 @@ require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/template-functions.php';
 
 /**
- * Customizer additions.
+ * Disable the emoji's
  */
-require get_template_directory() . '/inc/customizer.php';
+function disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );	
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );	
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	
+	// Remove from TinyMCE
+	add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+}
+add_action( 'init', 'disable_emojis' );
 
 /**
- * Load Jetpack compatibility file.
+ * Filter out the tinymce emoji plugin.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
+function disable_emojis_tinymce( $plugins ) {
+	if ( is_array( $plugins ) ) {
+		return array_diff( $plugins, array( 'wpemoji' ) );
+	} else {
+		return array();
+	}
 }
 
+function remove_block_library_css() {
+wp_dequeue_style( 'wp-block-library' ); 
+wp_dequeue_style( 'validate-engine-css' ); 
+}
+add_action( 'wp_enqueue_scripts', 'remove_block_library_css' );
+
+function disable_wpembedJS(){
+  wp_deregister_script( 'wp-embed' );
+}
+add_action( 'wp_footer', 'disable_wpembedJS' );
+
+// rimuove stupide immagini scaled:
+// https://hollypryce.com/disable-image-scaling-wordpress/
+add_filter( 'big_image_size_threshold', '__return_false' );
+add_filter('jpeg_quality', function($arg){return 100;});
+
+// Remove Global Styles and SVG Filters from WP 5.9.1 - 2022-02-27
+function remove_global_styles_and_svg_filters() {
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+	remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
+}
+add_action('init', 'remove_global_styles_and_svg_filters');
+
+// Remove admin bar
+add_filter('show_admin_bar', '__return_false');

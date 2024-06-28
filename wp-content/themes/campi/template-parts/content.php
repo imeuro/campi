@@ -12,21 +12,34 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php
-		if ( is_singular() ) :
-			the_title( '<h1 class="entry-title">', '</h1>' );
-		else :
-			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-		endif;
+		if ( is_singular() ) {
+			$data_opera = '';
+			if ( 'post' === get_post_type() ) {
 
-		if ( 'post' === get_post_type() ) :
-			?>
-			<div class="entry-meta">
-				<?php
-				campi_posted_on();
-				campi_posted_by();
-				?>
-			</div><!-- .entry-meta -->
-		<?php endif; ?>
+				$autori = wp_get_post_terms( $post->ID, 'autori', array( 'fields' => 'names' ) );
+				$sep = (count($autori) > 1) ? ', ' : '';
+				foreach ($autori as $key => $autore) {
+					echo "<h2>$autore Campi</h2>";
+				}
+
+				$data_start = get_field('anno_inizio',$post->ID);
+				$data_end = get_field('anno_fine',$post->ID);
+				$sep1 = ($data_start || $data_end) ? ', ' : '';
+				$sep2 = ($data_start && $data_end) ? '-' : '';
+				$data_opera = $sep1.$data_start.$sep2.$data_end;
+
+			}
+			the_title( '<h1 class="entry-title"><em>', '</em>'.$data_opera.'</h1>' );
+
+			$materiale = get_field('materiale_dimensioni',$post->ID);
+			echo "<span>$materiale</span>";		
+
+
+		} else {
+			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+		}
+		?>
+
 	</header><!-- .entry-header -->
 
 	<?php campi_post_thumbnail(); ?>
