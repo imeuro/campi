@@ -106,7 +106,7 @@ a:visited {
 
 /* header + menu main */
 .site-header {
-	position: fixed;
+	position: static;
     width: auto;
 }
 .site-title a {
@@ -148,7 +148,8 @@ article .entry-header {
 	line-height: 1.33;
 }
 article .entry-content {
-    line-height: 1.25;
+    font-size: 18px;
+    line-height: 1.5;
     margin-bottom: calc(var(--spacer-unit)* 3);
 }
 article .entry-content p,
@@ -207,6 +208,9 @@ article .entry-content figure.alignfull {
 
 
 @media all and (min-width: 1000px) {
+	.site-header {
+		position: fixed;
+	}
 	.container #post-navigation {
 		display: block;
 		position: sticky;
@@ -263,7 +267,6 @@ article .entry-content figure.alignfull {
 	article .entry-content {
 		width: 768px;
 		max-width: calc(100% - 250px);
-		font-size: 18px;
 		font-size: calc(75% + .5vw);
 		line-height: 1.5;
 		margin-bottom: calc(var(--spacer-unit)* 5);
