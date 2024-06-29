@@ -175,7 +175,17 @@ article .section-heading.smol {
 #related-arts-carousel .CSScarousel {
 	flex-flow: row nowrap;
 	gap: var(--spacer-unit);
-	margin: 0;
+	margin: 0 calc(var(--spacer-unit)* -1);
+}
+#related-arts-carousel .CSScarouselItem:first-of-type {
+    scroll-margin-left: var(--spacer-unit);
+    margin-left: var(--spacer-unit);
+    scroll-snap-align: center;
+}
+#related-arts-carousel .CSScarouselItem:last-of-type {
+    scroll-margin-right: var(--spacer-unit);
+    margin-right: var(--spacer-unit);
+    scroll-snap-align: center;
 }
 #related-arts-carousel .CSScarouselPrev,
 #related-arts-carousel .CSScarouselNext {
@@ -216,6 +226,16 @@ article .entry-content figure.alignfull {
 		flex-flow: row nowrap;
 		gap: var(--spacer-unit);
 		margin: 0 calc(var(--spacer-unit)* 1.8);
+	}
+	#related-arts-carousel .CSScarouselItem:first-of-type {
+		scroll-margin-left: 0;
+		margin-left: 0;
+		scroll-snap-align: center;
+	}
+	#related-arts-carousel .CSScarouselItem:last-of-type {
+		scroll-margin-right: 0;
+		margin-right: 0;
+		scroll-snap-align: center;
 	}
 	#related-arts-carousel .CSScarouselPrev,
 	#related-arts-carousel .CSScarouselNext {
