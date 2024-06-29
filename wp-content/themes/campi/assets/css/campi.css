@@ -106,9 +106,8 @@ a:visited {
 
 /* header + menu main */
 .site-header {
-	position: absolute;
-    z-index: 2;
-    width: calc(100% - calc(var(--spacer-unit)* 2));
+	position: fixed;
+    width: auto;
 }
 .site-title a {
     font-size: 32px;
@@ -154,6 +153,10 @@ article .entry-content {
 }
 article .entry-content p,
 article .entry-content figure { margin-bottom:  var(--spacer-unit); }
+article .entry-content figcaption {
+    font-size: 13px;
+    text-align: center;
+}
 
 article .section-heading {
 	font-weight: 600;
@@ -264,6 +267,7 @@ article .entry-content figure.alignfull {
 		font-size: calc(75% + .5vw);
 		line-height: 1.5;
 		margin-bottom: calc(var(--spacer-unit)* 5);
+		scroll-margin-top: 60px;
 	}
 	article .entry-content figure.alignwide,
 	article .entry-content figure.alignfull {
@@ -290,7 +294,7 @@ article .entry-content figure.alignfull {
 
 	.aside-navi {
 		position: absolute;
-		bottom: 0;
+		top: 350px;
 		border-top: 1px solid rgb(var(--nero));
 	}
 

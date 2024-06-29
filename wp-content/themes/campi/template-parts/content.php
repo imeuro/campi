@@ -21,19 +21,24 @@
 				foreach ($autori as $key => $autore) {
 					echo "<h2>$autore Campi</h2>";
 				}
+				$dati_principali = get_field('dati_principali',$post->ID);
+				// echo '<pre>';
+				// print_r($dati_principali);
+				// echo '</pre>';
 
-				$data_start = get_field('anno_inizio',$post->ID);
-				$data_end = get_field('anno_fine',$post->ID);
-				$sep1 = ($data_start || $data_end) ? ', ' : '';
-				$sep2 = ($data_start && $data_end) ? '-' : '';
-				$data_opera = $sep1.$data_start.$sep2.$data_end;
+				if ($dati_principali) {
 
+					$sep1 = ($dati_principali['anno_inizio'] || $dati_principali['anno_fine']) ? ', ' : '';
+					$sep2 = ($dati_principali['anno_inizio'] && $dati_principali['anno_fine']) ? '-' : '';
+					$data_opera = $sep1.$dati_principali['anno_inizio'].$sep2.$dati_principali['anno_fine'];
+				
+					the_title( '<h1 class="entry-title"><em>', '</em>'.$data_opera.'</h1>' );
+					echo "<span>".$dati_principali['materiale_dimensioni']."</span>";
+
+				}	
 			}
 
-			the_title( '<h1 class="entry-title"><em>', '</em>'.$data_opera.'</h1>' );
 
-			$materiale = get_field('materiale_dimensioni',$post->ID);
-			echo "<span>$materiale</span>";		
 		} else {
 			the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		}
@@ -46,7 +51,7 @@
 		<div id="related-arts-carousel">
 			<h4 class="section-heading smol">Opere collegate</h4>
 			<ul id="related" class="CSScarousel flex" data-passo="1">
-				<?php // temp
+				<?php // temp!!
 					$rnd = random_int(10, 25);
 					for ($i=0; $i < $rnd; $i++) { 
 						echo '<li class="CSScarouselItem"><img src="https://picsum.photos/80/112?random='.$i.'" /></li>';
