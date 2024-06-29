@@ -31,14 +31,13 @@
 		$bibliografia_specifica = get_field('bibliografia_specifica',$post->ID);
 
 		if($commissione) {
-			echo '<li class="aside-link"><a href="#commissione">Commissione</a></li>';
+			echo '<li class="aside-link aside-anchor" data-section="commissione"><a href="#commissione">Commissione</a></li>';
 		}
 		if($restauro) {
-			echo '<li class="aside-link"><a href="#restauro">Restauro</a></li>';
+			echo '<li class="aside-link aside-anchor" data-section="restauro"><a href="#restauro">Restauro</a></li>';
 		}
 		if($bibliografia_specifica) {
-			echo '<li class="aside-link"><a href="#bibliografia_specifica">Bibliografia specifica</a></li>';
+			echo '<li class="aside-link aside-anchor" data-section="bibliografia_specifica"><a href="#bibliografia_specifica">Bibliografia specifica</a></li>';
 		}
-
 	?>
 </ul>

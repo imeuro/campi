@@ -42,6 +42,32 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
+
+		<div id="related-arts-carousel">
+			<h4 class="section-heading smol">Opere collegate</h4>
+			<ul id="related" class="CSScarousel flex" data-passo="1">
+				<?php // temp
+					$rnd = random_int(10, 25);
+					for ($i=0; $i < $rnd; $i++) { 
+						echo '<li class="CSScarouselItem"><img src="https://picsum.photos/80/112?random='.$i.'" /></li>';
+					}
+				?>
+			</ul>
+			<a class="CSScarouselPrev CSScarouselControl CSScarouselDisabled" data-target="#related">
+				<svg width="21" height="18">
+					<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
+				</svg>
+			</a>
+			<a class="CSScarouselNext CSScarouselControl" data-target="#related">
+				<svg width="21" height="18">
+					<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
+				</svg>
+
+			</a>
+		</div>
+
+
+
 		<?php
 		the_content(
 			sprintf(
