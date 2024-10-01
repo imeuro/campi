@@ -10,6 +10,7 @@
 get_header();
 
 ?>
+
 	<div class="container flex">
 	<?php
 		while ( have_posts() ) :
@@ -17,18 +18,13 @@ get_header();
 	?>
 		<aside id="post-navigation">
 
-			<?php
-			get_template_part( 'template-parts/aside', 'info-opera' );
-			?>
+			<?php get_template_part( 'template-parts/aside', 'info-opera' ); ?>
 
 		</aside>
 
 		<main id="primary" class="site-main">
 
-			
-			<?php 
-			get_template_part( 'template-parts/content', get_post_type() );
-			?>
+			<?php get_template_part( 'template-parts/content', get_post_type() ); ?>
 
 		</main><!-- #main -->
 
