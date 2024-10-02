@@ -71,6 +71,7 @@ function campi_setup() {
 		)
 	);
 
+	add_post_type_support( 'page', 'excerpt' );
 
 }
 add_action( 'after_setup_theme', 'campi_setup' );
@@ -201,3 +202,5 @@ add_action('init', 'remove_global_styles_and_svg_filters');
 
 // Remove admin bar
 add_filter('show_admin_bar', '__return_false');
+
+

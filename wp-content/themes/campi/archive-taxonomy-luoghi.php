@@ -23,16 +23,23 @@ get_header();
 				?>
 			</header><!-- .page-header -->
 
-			<?php
-			//pare che manchi l'archivio di tutti i termini di una taxonomy O_o
-			// una cosa del genere....
-			$terms = get_terms('luoghi');
-			echo '<ul>';
-			foreach ($terms as $term) {
-			    echo '<li><a href="'.get_term_link($term).'">'.$term->name.'</a></li>';
-			}
-			echo '</ul>';
+			<section id="map">
+			</section>
 
+			<section id="tax-list">
+				<?php
+				//pare che manchi l'archivio di tutti i termini di una taxonomy O_o
+				// una cosa del genere....
+				$terms = get_terms('luoghi');
+				echo '<ul>';
+				foreach ($terms as $term) {
+					echo '<li><a href="'.get_term_link($term).'">'.$term->name.'</a></li>';
+				}
+				echo '</ul>';
+				?>
+			</section>
+
+			<?php
 		else :
 
 			get_template_part( 'template-parts/content', 'none' );

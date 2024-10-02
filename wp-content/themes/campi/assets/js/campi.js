@@ -1,6 +1,33 @@
+/* HOME */
+const HPslider = document.querySelector('.home .imageslider');
+Array.from(HPslider.children).forEach((el) => {
+	if (el.dataset.index == 1) {
+		el.classList.add('active');
+	} else {  }
 
+	el.style.zIndex = el.dataset.index;
+})
 
-
+let sfoglioRun = 1;
+let sfoglioSlider = () => {
+	if (sfoglioRun < HPslider.children.length) { 
+		for (let i = 0; i < HPslider.children.length; i++) {
+			if (!HPslider.children[i].classList.contains('active')) {
+				HPslider.children[i].classList.add('active');
+				sfoglioRun++;
+				console.debug(HPslider.children.length, sfoglioRun);
+				break;
+			}
+		}
+	} else {
+		console.debug(sfoglioRun,'RESET!');
+		for (let i = 1; i < HPslider.children.length; i++) {
+			HPslider.children[i].classList.remove('active');
+		}
+		sfoglioRun = 1;
+	}
+}
+setInterval(sfoglioSlider, 4000);
 
 /* FOGLIA */
 
