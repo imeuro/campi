@@ -14,6 +14,12 @@
 		<path d="M11.2459 6H1" stroke="black" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
 		<path d="M8.13672 1.15186L12.963 5.99999" stroke="black" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
 		<path d="M8.13672 10.8481L12.963 6" stroke="black" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
+	</symbol>	
+	<symbol id="ico-arrow-right-wh" viewBox="0 0 15 12">
+		<path d="M11.2459 6H1H11.2459Z" fill="white"/>
+		<path d="M11.2459 6H1" stroke="white" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
+		<path d="M8.13672 1.15186L12.963 5.99999" stroke="white" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
+		<path d="M8.13672 10.8481L12.963 6" stroke="white" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="bevel"/>
 	</symbol>
 
 	<symbol id="ico-dot" viewBox="0 0 4 4">

@@ -30,6 +30,27 @@ get_header();
 					<h2 class="page-description"><?php echo get_the_excerpt(); ?></h2>
 				</a>
 			</header>
+
+			<ul class="lang-switch">
+			<?php 
+				$langs = pll_the_languages( array( 'raw' => 1 ));
+				// echo "<pre>";
+				// print_r( $langs );
+				// echo "</pre>";
+				foreach ($langs as $lang) :
+				?>
+					<li>
+						<a class="menu-lang" data-text="<?php echo strtoupper($lang['slug']); ?>" href="<?php echo $lang['url']; ?>" title="<?php echo strtoupper($lang['name']); ?>">
+							<svg width="30" height="30">
+									<use xlink:href="<?php echo get_template_directory_uri() . '/assets/campi-sprite.svg#ico-arrow-right-wh'; ?>"></use>
+								</svg>
+						</a>
+					</li>
+				<?php
+				endforeach;
+			?>
+			</ul>
+
 		<?php
 			while ( have_posts() ) :
 				the_post();
