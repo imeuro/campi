@@ -55,7 +55,7 @@ nav#site-navigation {
 	width: 80vw;
 	height: 100vh;
 	border-left: 1px solid rgb(var(--nero));
-	background: rgb(var(--bianco));
+	background: rgba(var(--bianco),.95);
 	transition: right 300ms ease-in-out;
 	animation: menu-side 2s ease-in-out;
 }
@@ -70,7 +70,7 @@ nav#site-navigation .menu-toggle {
     top: 0;
     text-indent: -99999px;
     border: none;
-    background: rgb(var(--bianco));
+    background: transparent;
 	width: 30px;
 	padding: 10px;
 }
@@ -100,7 +100,8 @@ nav#site-navigation .nav-menu .menu-first {
 	margin-bottom: 60px;
 }
 
-nav#site-navigation .nav-menu a {
+nav#site-navigation .nav-menu a,
+nav#site-navigation a.nav-menu-map {
 	display: block;
 	text-decoration: none;
 	font-size: 26px;
@@ -109,13 +110,15 @@ nav#site-navigation .nav-menu a {
 	padding: 7px 7px 14px 7px;
 	transition: padding 150ms ease-in-out;
 }
-nav#site-navigation .nav-menu a:hover { 
+nav#site-navigation .nav-menu a:hover,
+nav#site-navigation a.nav-menu-map:hover { 
 	padding-right: 27px;
 }
 nav#site-navigation .nav-menu .menu-first a {
 	font-size: 32px;
 }
-nav#site-navigation .nav-menu a.menu-lang svg {
+nav#site-navigation .nav-menu a.menu-lang svg,
+nav#site-navigation a.nav-menu-map svg {
 	width: 25px;
     height: 22px;
 }
@@ -129,6 +132,13 @@ nav#site-navigation .nav-menu a.menu-lang:hover:after {
 	left: 20px;
 }
 
+nav#site-navigation a.nav-menu-map {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+nav#site-navigation a.nav-menu-map svg { margin-right: 10px; }
 
 @media all and (min-width: 768px) {
 	.menu-toggle { display: block; }
@@ -155,21 +165,23 @@ nav#site-navigation .nav-menu a.menu-lang:hover:after {
 		font-size: 18px;
 		display: block;
 		position: relative;
-		right: 20px;
+		right: 10px;
 		background-color: rgb(var(--nero));
 		transition: right 300ms ease-in-out;
 	}
 	nav#site-navigation.toggled .menu-toggle:before {
 		/* right: -330px; */
 	}
-	nav#site-navigation .nav-menu a {
+	nav#site-navigation .nav-menu a,
+	nav#site-navigation a.nav-menu-map {
 		font-size: 27px;
 		line-height: 50px;
 	}
 	nav#site-navigation .nav-menu .menu-first a {
 		font-size: 40px;
 	}
-	nav#site-navigation .nav-menu a.menu-lang svg {
+	nav#site-navigation .nav-menu a.menu-lang svg,
+	nav#site-navigation a.nav-menu-map svg {
 		width: 30px;
 		height: 30px;
 	}
@@ -378,6 +390,19 @@ a:visited {
     object-fit: cover;
 }
 
+/* MAPPA*/
+#campi-map {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100dvh;
+}
+
+#campi-map .mapboxgl-ctrl-bottom-right { right: 60px; }
+
+
+
 /* contenuto pagina */
 .single-post .site-header {
     background: #fff;
@@ -474,6 +499,7 @@ article .entry-content figure.alignfull {
 @media all and (min-width: 1000px) {
 	.site-header {
 		position: fixed;
+		z-index: 10;
 	}
 	.container #post-navigation {
 		display: block;

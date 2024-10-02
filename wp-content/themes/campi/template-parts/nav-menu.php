@@ -17,7 +17,7 @@
 			?>
 		<a class="menu-lang" data-text="<?php echo strtoupper($langs[$otherlang]['slug']); ?>" href="<?php echo $langs[$otherlang]['url']; ?>" title="<?php echo strtoupper($langs[$otherlang]['name']); ?>">
 			<svg width="30" height="30">
-             <use xlink:href="<?php echo home_url( '/wp-content/themes/campi/assets/campi-sprite.svg#ico-arrow-right' ); ?>"></use>
+             <use xlink:href="<?php echo get_template_directory_uri() . '/assets/campi-sprite.svg#ico-arrow-right'; ?>"></use>
           </svg>
 		</a>
 	</li>
@@ -27,3 +27,9 @@
 	<li><a href="<?php echo home_url( '/cronologia/' ); ?>" title="CRONOLOGIA">CRONOLOGIA</a></li>
 	<li><a href="<?php echo home_url( '/bibliografia/' ); ?>" title="BIBLIOGRAFIA">BIBLIOGRAFIA</a></li>
 </ul>
+<a href="<?php echo home_url( '/mappa/' ); ?>" title="MAPPA" class="nav-menu-map">
+	<svg width="50" height="50">
+		<use xlink:href="<?php echo get_template_directory_uri() . '/assets/campi-sprite.svg?#ico-map'; ?>"></use>
+	</svg>
+	MAPPA
+</a>

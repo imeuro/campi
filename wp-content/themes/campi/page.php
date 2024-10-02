@@ -21,12 +21,13 @@ get_header();
 		while ( have_posts() ) :
 			the_post();
 
-			get_template_part( 'template-parts/content', 'page' );
+			if ($post->post_name == 'mappa' || $post->post_name == 'map') { // tutte le pagine che avranno la mappa come bg
+ 				get_template_part( 'template-parts/content', 'page-map' );
+			} else {
+				get_template_part( 'template-parts/content', 'page' );
+			}
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+			
 
 		endwhile; // End of the loop.
 		?>
@@ -34,5 +35,4 @@ get_header();
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();

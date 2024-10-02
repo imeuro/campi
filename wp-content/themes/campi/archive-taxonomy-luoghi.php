@@ -23,8 +23,7 @@ get_header();
 				?>
 			</header><!-- .page-header -->
 
-			<section id="map">
-			</section>
+			<section id="campi-map"></section>
 
 			<section id="tax-list">
 				<?php
