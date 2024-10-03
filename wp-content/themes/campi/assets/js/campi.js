@@ -86,7 +86,7 @@ if (HPslider) {
 const mapDiv = document.getElementById('campi-map');
 let BaseCoords = window.innerWidth<600 ? [10.023,45.142] : [10.018, 45.137];
 let BaseZoom = window.innerWidth<600 ? 8 : 7.5;
-var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=acf,id,slug,name,content&per_page=99');
+var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=parent,acf,id,slug,name,content&per_page=99');
 
 // THE MAP BOX
 const generateMapbox = () => {
@@ -141,7 +141,7 @@ const generateMapbox = () => {
         	
 			map.addSource('locations', {
 				'type': 'geojson',
-				'data': CAWgeoJSON_locations
+				'data': campi_JSON_locations
 			}) 
 
 			map.addLayer({
@@ -198,31 +198,35 @@ if (mapDiv) {
 // document.addEventListener('DOMContentLoaded', () => {
 let fetchLocations = () => {
 	locationsList.then( 
-			ARTdata => {
+			LOCdata => {
 				var features = [];
 				var geoJSON = {};
 				let i = 1;
 				geoJSON.type = 'FeatureCollection';
-				Object.values(ARTdata).forEach(el => {
-					console.debug( {el} );
-					var art = {};
-					art.type = "Feature";
-					art.properties = {}
-					art.properties.type = el.type;
-					art.properties.title = el.name;
-					art.properties.description = el.acf.descrizione_dettagliata;
-					art.properties.post_id = el.id;
-					art.properties.location_address = el.acf.map_location.street_name+', '+el.acf.map_location.street_number+'<br>'+el.acf.map_location.city+' ('+el.acf.map_location.state_short+') '+'<br>'+el.acf.map_location.country;
-					art.geometry = {};
-					art.geometry.type = "Point"
-					art.geometry.coordinates = [el.acf.map_location.lng,el.acf.map_location.lat];
-					i++;
-					features.push(art);
+				Object.values(LOCdata).forEach(el => {
+					if (el.parent == 0) {
+						console.debug( {el} );
+						var loc = {};
+						
+						loc.type = "Feature";
+						loc.properties = {}
+						loc.properties.type = el.type;
+						loc.properties.title = el.name;
+						loc.properties.description = el.acf.descrizione_dettagliata;
+						loc.properties.post_id = el.id;
+						loc.properties.location_address = el.acf.map_location.street_name+', '+el.acf.map_location.street_number+'<br>'+el.acf.map_location.city+' ('+el.acf.map_location.state_short+') '+'<br>'+el.acf.map_location.country;
+						loc.geometry = {};
+						loc.geometry.type = "Point"
+						loc.geometry.coordinates = [el.acf.map_location.lng,el.acf.map_location.lat];
+						i++;
+					
+						features.push(loc);
+					}
 				});
 
 				geoJSON.features = features;
-				CAWgeoJSON_locations = geoJSON;
-				console.debug(CAWgeoJSON_locations)
+				campi_JSON_locations = geoJSON;
+				console.debug(campi_JSON_locations)
 			}
 	)
 	.then( element => {
