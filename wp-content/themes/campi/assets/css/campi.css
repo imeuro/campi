@@ -399,7 +399,10 @@ a:visited {
 	height: 100dvh;
 }
 
-#campi-map .mapboxgl-ctrl-bottom-right { right: 60px; }
+#campi-map .mapboxgl-ctrl-bottom-right { 
+	right: 60px;
+	bottom: 30px;
+}
 
 
 
