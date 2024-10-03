@@ -261,7 +261,8 @@ a:visited {
 
 /* header + menu main */
 .site-header {
-	position: static;
+	position: fixed;
+	z-index: 10;
     width: auto;
 }
 .site-title a {
