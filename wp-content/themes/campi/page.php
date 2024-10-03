@@ -21,7 +21,7 @@ get_header();
 		while ( have_posts() ) :
 			the_post();
 
-			if ($post->post_name == 'mappa' || $post->post_name == 'map') { // tutte le pagine che avranno la mappa come bg
+			if ($post->post_name == 'mappa' || $post->post_name == 'map' || $post->post_name == 'about' || $post->post_name == 'about-us') { // tutte le pagine che avranno la mappa come bg
  				get_template_part( 'template-parts/content', 'page-map' );
 			} else {
 				get_template_part( 'template-parts/content', 'page' );

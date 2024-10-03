@@ -42,8 +42,8 @@ get_header();
 					<li>
 						<a class="menu-lang" data-text="<?php echo strtoupper($lang['slug']); ?>" href="<?php echo $lang['url']; ?>" title="<?php echo strtoupper($lang['name']); ?>">
 							<svg width="30" height="30">
-									<use xlink:href="<?php echo get_template_directory_uri() . '/assets/campi-sprite.svg#ico-arrow-right-wh'; ?>"></use>
-								</svg>
+								<use xlink:href="<?php echo get_template_directory_uri() . '/assets/campi-sprite.svg#ico-arrow-right-wh'; ?>"></use>
+							</svg>
 						</a>
 					</li>
 				<?php
