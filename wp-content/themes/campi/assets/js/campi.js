@@ -85,15 +85,13 @@ if (HPslider) {
 
 const mapDiv = document.getElementById('campi-map');
 let BaseCoords = window.innerWidth<600 ? [10.023,45.142] : [10.018, 45.137];
-let BaseZoom = window.innerWidth<600 ? 8 : 10.5;
+let BaseZoom = window.innerWidth<600 ? 8 : 7.5;
 var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=acf,id,slug,name,content&per_page=99');
 
 // THE MAP BOX
 const generateMapbox = () => {
 	
 	mapboxgl.accessToken = mapDiv.dataset.map;
-	mapboxgl.accessToken = 'pk.eyJ1IjoibWV1cm8iLCJhIjoiY2xmcjA2ZDczMDEwYTQzcWZwZXk4dmpvdSJ9.YHkGCdl-D6YkWDJbNGOBEQ';
-
 	
 	map = new mapboxgl.Map({
 		container: 'campi-map', // container ID
@@ -118,10 +116,70 @@ const generateMapbox = () => {
 			showUserHeading: true
 		}),'bottom-right'
 	);
+
+
+	map.on('load', () => {
+
+		const markers =[
+		  {
+		  	url: Baseurl+'/wp-content/themes/campi/assets/img/map-pointer.png', 
+		  	id: 'image_location'
+		  },
+		]
+
+		Promise.all(
+            markers.map(img => new Promise((resolve, reject) => {
+                map.loadImage(img.url, function (error, res) {
+                	if (error) throw error;
+                    map.addImage(img.id, res)
+                    resolve();
+                })
+            }))
+        ).then(() => {
+
+        	//console.debug('promise done');
+        	
+			map.addSource('locations', {
+				'type': 'geojson',
+				'data': CAWgeoJSON_locations
+			}) 
+
+			map.addLayer({
+				'id': 'locations',
+				'type': 'symbol',
+				'source': 'locations',
+				'minzoom': 3,
+				'maxzoom': 20,
+				'layout': {
+					'icon-image': 'image_location',
+					'icon-size': .5,
+					'icon-allow-overlap': true,
+					'icon-ignore-placement': true,
+					'text-allow-overlap': false,
+					'text-ignore-placement': true,
+					'text-optional': true,
+					'text-field': ['get', 'title'],
+					'text-variable-anchor': ['bottom-left'],
+					'text-radial-offset': 1,
+					'text-justify': 'left',
+					'text-size': 14,
+					// 'text-font': ['OPS Placard Regular'],
+				},
+
+				'paint': {
+					'text-color': '#000000',
+				}
+			})
+
+		});
+
+
+	});
+
+
 }
 
 if (mapDiv) {
-	console.debug('wewe');
 	fetchLoader({
 		href: 'https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css',
 		rel: 'stylesheet',
@@ -133,12 +191,12 @@ if (mapDiv) {
 			async: false
 		}, "MAPBOX_init"))
 	.then( element => {
-		generateMapbox();
+		fetchLocations();
 	})
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-
+// document.addEventListener('DOMContentLoaded', () => {
+let fetchLocations = () => {
 	locationsList.then( 
 			ARTdata => {
 				var features = [];
@@ -154,9 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					art.properties.title = el.name;
 					art.properties.description = el.acf.descrizione_dettagliata;
 					art.properties.post_id = el.id;
-					// art.properties.testo_eng = el.acf.testo_eng;
-					// art.properties.location_id = el.acf.location_id;
-					// art.properties.location_name = el.acf.map_location.name;
 					art.properties.location_address = el.acf.map_location.street_name+', '+el.acf.map_location.street_number+'<br>'+el.acf.map_location.city+' ('+el.acf.map_location.state_short+') '+'<br>'+el.acf.map_location.country;
 					art.geometry = {};
 					art.geometry.type = "Point"
@@ -169,8 +224,18 @@ document.addEventListener('DOMContentLoaded', () => {
 				CAWgeoJSON_locations = geoJSON;
 				console.debug(CAWgeoJSON_locations)
 			}
-	);
-});
+	)
+	.then( element => {
+		generateMapbox();
+	});
+};
+
+
+
+
+
+
+
 
 
 /* FOGLIA */
