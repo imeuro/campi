@@ -21,7 +21,7 @@
           </svg>
 		</a>
 	</li>
-	<li><a href="<?php echo home_url( '/about/' ); ?>" title="LUOGHI">LUOGHI</a></li>
+	<li><a href="<?php echo home_url( '/luoghi/' ); ?>" title="LUOGHI">LUOGHI</a></li>
 	<li><a href="<?php echo home_url( '/opere/' ); ?>" title="OPERE">OPERE</a></li>
 	<li><a href="<?php echo home_url( '/biografie/' ); ?>" title="BIOGRAFIE">BIOGRAFIE</a></li>
 	<li><a href="<?php echo home_url( '/cronologia/' ); ?>" title="CRONOLOGIA">CRONOLOGIA</a></li>

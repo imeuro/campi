@@ -706,7 +706,7 @@ article .entry-content figure.alignfull {
     right: 10px;
     top: 10px;
     width: 15px;
-    height: 10px;
+    height: 11px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' id='ico-chevron' viewBox='0 0 8 6'%3E%3Cpath d='M1 1L4.5 4.5L8 1' fill='none' stroke='black' stroke-width='0.8'/%3E%3C/svg%3E");
     transition: transform 100ms ease-out;
 }
