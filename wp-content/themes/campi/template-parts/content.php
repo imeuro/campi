@@ -48,7 +48,7 @@
 
 	<div class="entry-content">
 
-		<div id="related-arts-carousel">
+		<div id="related-arts-carousel" class="related-arts-carousel">
 			<h4 class="section-heading smol">Opere collegate</h4>
 			<ul id="related" class="CSScarousel flex" data-passo="1">
 				<?php // temp!!

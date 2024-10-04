@@ -14,13 +14,14 @@ get_header();
 
 	<main id="primary" class="site-main">
 
-		<?php if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : 
+		?>
 
 
 			<section id="campi-map" data-map="<?php echo MAPBOX_KEY ?>"></section>
 
 
-			<section id="page-content" data-id="<?php the_ID(); ?>" <?php post_class(); ?>>
+			<section id="archive-content" data-id="<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 					<?php 
 						the_title( '<h1 class="entry-title">', '</h1>' );
@@ -29,7 +30,7 @@ get_header();
 				</header><!-- .entry-header -->
 
 
-				<div id="tax-list">
+				<div id="location-list">
 					<?php
 					//pare che manchi l'archivio di tutti i termini di una taxonomy O_o
 					// una cosa del genere....
@@ -37,10 +38,57 @@ get_header();
 						'taxonomy' => 'luoghi',
 						'parent'   => 0
 					));
-					
+
 					echo '<ul>';
-					foreach ($terms as $term) {
-						echo '<li><a href="'.get_term_link($term).'">'.$term->name.'</a></li>';
+					//foreach ($terms as $term) {
+					for ($i=0; $i < count($terms) ; $i++) { 
+						$location = get_field('map_location', 'luoghi_'.$terms[$i]->term_id);?>
+						<li class="location-item">
+							<input type="checkbox" name="panel" id="panel-<?php echo $i; ?>" class="hidden">
+							<label for="panel-<?php echo $i; ?>" class="location-header">
+								<h2 class="location-name"><?php echo $terms[$i]->name; ?></h2>
+								<p class="location-data"><?php echo $location['city']; ?></p>
+							</label>
+							<div class="location-expand">
+								<p>
+									<?php echo $location['street_name']; ?>, <?php echo $location['street_number']; ?> - <?php echo $location['city']; ?> (<?php echo $location['state_short']; ?>) <?php echo $location['country']; ?>
+								</p>
+								<?php 
+									// TODO: foreach post in location...
+
+								?>
+
+								<div id="related-arts-carousel-<?php echo $terms[$i]->term_id; ?>" class="related-arts-carousel">
+									<ul id="related-<?php echo $terms[$i]->term_id; ?>" class="CSScarousel flex" data-passo="1">
+										<?php // temp!!
+											$rnd = random_int(10, 25);
+											for ($k=0; $k < $rnd; $k++) { 
+												echo '<li class="CSScarouselItem"><img src="https://picsum.photos/80/112?random='.$k.'" /></li>';
+											}
+										?>
+									</ul>
+									<a class="CSScarouselPrev CSScarouselControl CSScarouselDisabled" data-target="#related-<?php echo $terms[$i]->term_id; ?>">
+										<svg width="21" height="18">
+											<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
+										</svg>
+									</a>
+									<a class="CSScarouselNext CSScarouselControl" data-target="#related-<?php echo $terms[$i]->term_id; ?>">
+										<svg width="21" height="18">
+											<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
+										</svg>
+
+									</a>
+								</div>
+
+
+
+							</div>
+						</li>
+					<?php 
+					// echo '<pre>';
+					// print_r($term);
+					// print_r($location);
+					// echo '</pre>';
 					}
 					echo '</ul>';
 					?>
