@@ -16,27 +16,40 @@ get_header();
 
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
-				<?php
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
 
-			<section id="campi-map"></section>
+			<section id="campi-map" data-map="<?php echo MAPBOX_KEY ?>"></section>
 
-			<section id="tax-list">
-				<?php
-				//pare che manchi l'archivio di tutti i termini di una taxonomy O_o
-				// una cosa del genere....
-				$terms = get_terms('luoghi');
-				echo '<ul>';
-				foreach ($terms as $term) {
-					echo '<li><a href="'.get_term_link($term).'">'.$term->name.'</a></li>';
-				}
-				echo '</ul>';
-				?>
+
+			<section id="page-content" data-id="<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header">
+					<?php 
+						the_title( '<h1 class="entry-title">', '</h1>' );
+						the_archive_description( '<div class="archive-description">', '</div>' );
+					 ?>
+				</header><!-- .entry-header -->
+
+
+				<div id="tax-list">
+					<?php
+					//pare che manchi l'archivio di tutti i termini di una taxonomy O_o
+					// una cosa del genere....
+					$terms = get_terms(array( 
+						'taxonomy' => 'luoghi',
+						'parent'   => 0
+					));
+					
+					echo '<ul>';
+					foreach ($terms as $term) {
+						echo '<li><a href="'.get_term_link($term).'">'.$term->name.'</a></li>';
+					}
+					echo '</ul>';
+					?>
+				</div>
+
 			</section>
+
+
+			
 
 			<?php
 		else :

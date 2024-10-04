@@ -85,7 +85,7 @@ if (HPslider) {
 
 const mapDiv = document.getElementById('campi-map');
 let BaseCoords = window.innerWidth<600 ? [10.023,45.142] : [10.018, 45.137];
-let BaseZoom = window.innerWidth<600 ? 8 : 7.5;
+let BaseZoom = window.innerWidth<600 ? 6 : 7.5;
 var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=parent,acf,id,slug,name,content&per_page=99');
 
 // THE MAP BOX
@@ -207,7 +207,7 @@ let fetchLocations = () => {
 					if (el.parent == 0) {
 						console.debug( {el} );
 						var loc = {};
-						
+
 						loc.type = "Feature";
 						loc.properties = {}
 						loc.properties.type = el.type;
