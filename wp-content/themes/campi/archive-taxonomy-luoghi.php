@@ -40,12 +40,11 @@ get_header();
 					));
 
 					echo '<ul>';
-					//foreach ($terms as $term) {
 					for ($i=0; $i < count($terms) ; $i++) { 
 						$location = get_field('map_location', 'luoghi_'.$terms[$i]->term_id);?>
-						<li class="location-item">
-							<input type="checkbox" name="panel" id="panel-<?php echo $i; ?>" class="hidden">
-							<label for="panel-<?php echo $i; ?>" class="location-header">
+						<li class="location-item" data-location="<?php echo $terms[$i]->term_id; ?>" data-lat="<?php echo $location['lat']; ?>" data-lng="<?php echo $location['lng']; ?>">
+							<input type="checkbox" name="panel" id="panel-<?php echo $terms[$i]->term_id; ?>" class="hidden">
+							<label for="panel-<?php echo $terms[$i]->term_id; ?>" class="location-header">
 								<h2 class="location-name"><?php echo $terms[$i]->name; ?></h2>
 								<p class="location-data"><?php echo $location['city']; ?></p>
 							</label>

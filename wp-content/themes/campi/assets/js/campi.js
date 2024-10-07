@@ -4,7 +4,7 @@ const WPREST_Base = Baseurl+'/wp-json/wp/v2';
 const current_lang = document.body.dataset.lang;
 
 
-// Library
+// Fn Library
 async function getPostsFromWp( urlRequest ) {
 	try {
 		const response = await fetch( urlRequest )
@@ -87,6 +87,7 @@ const mapDiv = document.getElementById('campi-map');
 let BaseCoords = window.innerWidth<600 ? [10.023,45.142] : [10.018, 45.137];
 let BaseZoom = window.innerWidth<600 ? 6 : 7.5;
 var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=parent,acf,id,slug,name,content&per_page=99');
+const ShiftMap = window.innerWidth<600 ? -0.002 : -0.002;
 
 // THE MAP BOX
 const generateMapbox = () => {
@@ -176,6 +177,36 @@ const generateMapbox = () => {
 
 	});
 
+	let readmorelink;		
+	let coords = [];
+	let locID = '';
+	let features = {};
+
+	map.on('mouseenter', 'locations', (event) => {
+		map.getCanvas().style.cursor = 'pointer';
+		// If the user clicked on one of your markers, get its information.
+		features = map.queryRenderedFeatures(event.point, {
+			layers: ['locations'] // replace with your layer name
+		});
+		if (!features.length) {
+			return;
+		}
+		let feature = features[0];
+		console.debug({feature});
+		coords = feature.geometry.coordinates;
+		locID = feature.properties.post_id;
+
+	});
+
+	map.on('click', 'locations', () => {
+
+	 	openAccordion(locID);
+
+	});
+
+	map.on('mouseleave', 'locations', () => {
+		map.getCanvas().style.cursor = '';
+	});
 
 }
 
@@ -237,9 +268,42 @@ let fetchLocations = () => {
 
 
 
+/* LUOGHI */
 
+// gestione accordion: 
+// click su tab: aperto solo uno alla volta
+let details = document.querySelectorAll('#location-list .location-item');
+if (details) {
+	Array.from(details).forEach(function (d, index) {
+		d.addEventListener('click', () => {
+			openAccordion(d.dataset.location);
 
+		});
+	});
+}
 
+//
+const openAccordion = (locID) => {
+	let target = document.querySelector(`#location-list .location-item[data-location="${locID}"]`);
+	let others = document.querySelectorAll(`#location-list .location-item`);
+	Array.from(others).forEach(function (d, index) {
+		d.querySelector('input[name="panel"]').checked = false;
+	});
+	// open accordion
+	target.querySelector('input[name="panel"]').checked = true;
+	// scroll to accordion div 
+	// ...
+	// muove mappa
+	map.flyTo({
+		center: [(target.dataset.lng - ShiftMap),target.dataset.lat],
+		essential: true,
+		zoom:16,
+		duration: 5000
+	});
+	console.debug({target});
+}
+
+// eventuale parametro in url
 
 
 /* FOGLIA */
