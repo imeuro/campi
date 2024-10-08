@@ -277,7 +277,9 @@ if (details) {
 	Array.from(details).forEach(function (d, index) {
 		d.addEventListener('click', () => {
 			openAccordion(d.dataset.location);
-
+			d.scrollIntoView({ 
+				behavior: 'smooth' 
+			});
 		});
 	});
 }
@@ -292,7 +294,9 @@ const openAccordion = (locID) => {
 	// open accordion
 	target.querySelector('input[name="panel"]').checked = true;
 	// scroll to accordion div 
-	// ...
+	target.scrollIntoView({ 
+		behavior: 'smooth' 
+	});
 	// muove mappa
 	map.flyTo({
 		center: [(target.dataset.lng - ShiftMap),target.dataset.lat],
