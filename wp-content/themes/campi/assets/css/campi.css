@@ -26,12 +26,36 @@ a, a:active, a:hover, a:visited { color: rgb(var(--nero)); }
 	.desktop  { display: block; }
 }
 
+/* @font-face {
+  font-family: 'FAMILY_NAME';
+  font-style: NORMAL_OR_ITALIC;
+  font-weight: NUMERIC_WEIGHT_VALUE;
+  font-display: swap;
+  src: url(FONT_FILE_NAME.woff2) format('woff2');
+} */
+@font-face {
+  font-family: 'FTAktualBook';
+  src: url('../font/FTAktual-Book.woff2') format('woff2'), url('../font/FTAktual-Book.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'FTAktualBookItalic';
+  src: url('../font/FTAktual-BookItalic.woff2') format('woff2'), url('../font/FTAktual-BookItalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FTAktualSemibold';
+  src: url('../font/FTAktualSemibold.woff2') format('woff2'), url('../font/FTAktualSemibold.woff') format('woff');
+  font-display: swap;
+} 
+
 html, body {
 	background: rgb(var(--bianco));
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: "Open Sans", sans-serif;
+	font-family: "FTAktualBook", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;

@@ -4,15 +4,9 @@
 			<?php 
 			$langs = pll_the_languages( 
 				array( 
-					// 'display_names_as' 	=> 'slug',
-					// 'hide_current'		=> 1,
-					// 'echo' 				=> 0,
 					'raw' => 1
 				)
 			);
-			// echo "<pre>";
-			// print_r( $langs );
-			// echo "</pre>";
 			$otherlang = (pll_current_language('slug') == 'it') ? 'en' : 'it';
 			?>
 		<a class="menu-lang" data-text="<?php echo strtoupper($langs[$otherlang]['slug']); ?>" href="<?php echo $langs[$otherlang]['url']; ?>" title="<?php echo strtoupper($langs[$otherlang]['name']); ?>">
