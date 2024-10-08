@@ -22,7 +22,7 @@ get_header();
 		if ( have_posts() ) :
 		?>
 			<header>
-				<a title="Comincia la visita" href="<?php echo esc_url( home_url( '/mappa/' ) ); ?>">
+				<a title="Comincia la visita" href="<?php echo esc_url( home_url( '/luoghi/' ) ); ?>">
 					<h1>
 						<span class="page-subtitle">GIULIO, ANTONIO, VINCENZO, BERNARDINO</span>
 						<span class="page-title"><img src="<?php echo get_template_directory_uri() . '/assets/img/CAMPI.svg'; ?>" width="706" height="170" alt="CAMPI" /></span>
@@ -34,9 +34,6 @@ get_header();
 			<ul class="lang-switch">
 			<?php 
 				$langs = pll_the_languages( array( 'raw' => 1 ));
-				// echo "<pre>";
-				// print_r( $langs );
-				// echo "</pre>";
 				foreach ($langs as $lang) :
 				?>
 					<li>
