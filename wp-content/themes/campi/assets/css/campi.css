@@ -507,7 +507,7 @@ a:visited {
 
 
 #page section#page-content,
-#page section#archive-content {
+#page section#luoghi-container {
 	position: absolute;
     right: 0;
     top: 0;
@@ -516,15 +516,47 @@ a:visited {
     width: 100vw;
     height: calc(100dvh - 100px);
     overflow: scroll;
-    transition: right 500ms ease-in-out;
+    transition: right 1000ms ease-in-out;
 }
+#page section#luoghi-container {
+	position: fixed;
+    right: -100vw;
+}
+
+#page section#luoghi-container.opened { right: 0; }
+#page section#luoghi-container #close-container {
+    width: 45px;
+    height: 45px;
+    padding: 15px;
+    position: fixed;
+    z-index: 10;
+    right: 45px;
+    top: 15px;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+    cursor: pointer;
+}
+#page section#luoghi-container #close-container svg { 
+	width: 15px;
+	height: 15px;
+}
+#page section#luoghi-container.opened #close-container {
+	opacity: 1;
+	transition-delay: 1200ms;
+}
+#page section#luoghi-container.opened #close-container:hover { 
+	opacity: .5;
+	transition-delay: 0ms;
+}
+
+
 nav#site-navigation.toggled ~ main #page-content {
     right: 80vw;
 }
 
 article .entry-header,
 section#page-content .entry-header,
-section#archive-content .entry-header {
+section#luoghi-container .entry-header {
 	font-size: 26px;
 	font-weight: 500;
 	line-height: 1.33;
@@ -603,14 +635,18 @@ article .entry-content figure.alignfull {
 @media all and (min-width: 1000px) {
 
 	#page section#page-content,
-	#page section#archive-content {
-		opacity: 0;
-		animation: page-content 2s 500ms ease-in-out;
-		animation-fill-mode: forwards;
+	#page section#luoghi-container {
 		padding: calc(var(--spacer-unit)*1) calc(var(--spacer-unit)* 5) var(--spacer-unit) calc(var(--spacer-unit)* 2);
 		width: 40vw;
 		height: calc(100dvh - 50px);
 	}
+
+	#page section#luoghi-container #close-container,
+	#page section#luoghi-container.opened #close-container {
+		right: 75px;
+	}
+
+
 	nav#site-navigation.toggled ~ main #page-content {
 		right: 400px;
 	}

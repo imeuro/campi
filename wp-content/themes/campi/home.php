@@ -22,7 +22,7 @@ get_header();
 		if ( have_posts() ) :
 		?>
 			<header>
-				<a title="Comincia la visita" href="<?php echo esc_url( home_url( '/luoghi/' ) ); ?>">
+				<a title="Comincia la visita" href="<?php echo esc_url( home_url( '/mappa/' ) ); ?>">
 					<h1>
 						<span class="page-subtitle">GIULIO, ANTONIO, VINCENZO, BERNARDINO</span>
 						<span class="page-title"><img src="<?php echo get_template_directory_uri() . '/assets/img/CAMPI.svg'; ?>" width="706" height="170" alt="CAMPI" /></span>

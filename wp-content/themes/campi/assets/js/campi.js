@@ -87,9 +87,66 @@ const mapDiv = document.getElementById('campi-map');
 let BaseCoords = window.innerWidth<600 ? [10.023,45.142] : [10.018, 45.137];
 let BaseZoom = window.innerWidth<600 ? 6 : 7.5;
 var locationsList = getPostsFromWp(WPREST_Base+'/luoghi?_fields=parent,acf,id,slug,name,content&per_page=99');
-const ShiftMap = window.innerWidth<600 ? -0.002 : -0.002;
+const ShiftMap = window.innerWidth<600 ? -0.0005 : -0.002;
 
 // THE MAP BOX
+
+if (mapDiv) {
+	fetchLoader({
+		href: 'https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css',
+		rel: 'stylesheet',
+		type: 'text/css',
+		media: 'all'
+	}, "MAPBOX_init", 'link', document.head)
+	.then( element => fetchLoader({
+			src: 'https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js',
+			async: false
+		}, "MAPBOX_init"))
+	.then( element => {
+		fetchLocations();
+	})
+}
+
+// document.addEventListener('DOMContentLoaded', () => {
+let fetchLocations = () => {
+	locationsList.then( 
+		LOCdata => {
+			var features = [];
+			var geoJSON = {};
+			let i = 1;
+			geoJSON.type = 'FeatureCollection';
+			Object.values(LOCdata).forEach(el => {
+				if (el.parent == 0) {
+					console.debug( {el} );
+					var loc = {};
+
+					loc.type = "Feature";
+					loc.properties = {}
+					loc.properties.type = el.type;
+					loc.properties.title = el.name;
+					loc.properties.description = el.acf.descrizione_dettagliata;
+					loc.properties.post_id = el.id;
+					loc.properties.location_address = el.acf.map_location.street_name+', '+el.acf.map_location.street_number+'<br>'+el.acf.map_location.city+' ('+el.acf.map_location.state_short+') '+'<br>'+el.acf.map_location.country;
+					loc.geometry = {};
+					loc.geometry.type = "Point"
+					loc.geometry.coordinates = [el.acf.map_location.lng,el.acf.map_location.lat];
+					i++;
+				
+					features.push(loc);
+				}
+			});
+
+			geoJSON.features = features;
+			campi_JSON_locations = geoJSON;
+			console.debug(campi_JSON_locations)
+		}
+	)
+	.then( element => {
+		generateMapbox();
+	});
+};
+
+
 const generateMapbox = () => {
 	
 	mapboxgl.accessToken = mapDiv.dataset.map;
@@ -200,6 +257,7 @@ const generateMapbox = () => {
 
 	map.on('click', 'locations', () => {
 
+
 	 	openAccordion(locID);
 
 	});
@@ -210,71 +268,15 @@ const generateMapbox = () => {
 
 }
 
-if (mapDiv) {
-	fetchLoader({
-		href: 'https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css',
-		rel: 'stylesheet',
-		type: 'text/css',
-		media: 'all'
-	}, "MAPBOX_init", 'link', document.head)
-	.then( element => fetchLoader({
-			src: 'https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js',
-			async: false
-		}, "MAPBOX_init"))
-	.then( element => {
-		fetchLocations();
-	})
-}
-
-// document.addEventListener('DOMContentLoaded', () => {
-let fetchLocations = () => {
-	locationsList.then( 
-			LOCdata => {
-				var features = [];
-				var geoJSON = {};
-				let i = 1;
-				geoJSON.type = 'FeatureCollection';
-				Object.values(LOCdata).forEach(el => {
-					if (el.parent == 0) {
-						console.debug( {el} );
-						var loc = {};
-
-						loc.type = "Feature";
-						loc.properties = {}
-						loc.properties.type = el.type;
-						loc.properties.title = el.name;
-						loc.properties.description = el.acf.descrizione_dettagliata;
-						loc.properties.post_id = el.id;
-						loc.properties.location_address = el.acf.map_location.street_name+', '+el.acf.map_location.street_number+'<br>'+el.acf.map_location.city+' ('+el.acf.map_location.state_short+') '+'<br>'+el.acf.map_location.country;
-						loc.geometry = {};
-						loc.geometry.type = "Point"
-						loc.geometry.coordinates = [el.acf.map_location.lng,el.acf.map_location.lat];
-						i++;
-					
-						features.push(loc);
-					}
-				});
-
-				geoJSON.features = features;
-				campi_JSON_locations = geoJSON;
-				console.debug(campi_JSON_locations)
-			}
-	)
-	.then( element => {
-		generateMapbox();
-	});
-};
-
-
-
 
 /* LUOGHI */
 
 // gestione accordion: 
 // click su tab: aperto solo uno alla volta
-let details = document.querySelectorAll('#location-list .location-item');
-if (details) {
-	Array.from(details).forEach(function (d, index) {
+const fatherAcc = document.getElementById('luoghi-container');
+let allAcc = document.querySelectorAll('#location-list .location-item');
+if (allAcc) {
+	Array.from(allAcc).forEach(function (d, index) {
 		d.addEventListener('click', () => {
 			openAccordion(d.dataset.location);
 			d.scrollIntoView({ 
@@ -283,28 +285,51 @@ if (details) {
 		});
 	});
 }
+// chiusura accordion con X
+const closeAcc = document.getElementById('close-container');
+if (closeAcc) {
+	closeAcc.addEventListener('click', () => {
+		openAccordion('reset');
+	});
+}
+
 
 //
 const openAccordion = (locID) => {
-	let target = document.querySelector(`#location-list .location-item[data-location="${locID}"]`);
-	let others = document.querySelectorAll(`#location-list .location-item`);
-	Array.from(others).forEach(function (d, index) {
+
+	// reset accordions
+	Array.from(allAcc).forEach(function (d, index) {
 		d.querySelector('input[name="panel"]').checked = false;
 	});
-	// open accordion
-	target.querySelector('input[name="panel"]').checked = true;
-	// scroll to accordion div 
-	target.scrollIntoView({ 
-		behavior: 'smooth' 
-	});
-	// muove mappa
-	map.flyTo({
-		center: [(target.dataset.lng - ShiftMap),target.dataset.lat],
-		essential: true,
-		zoom:16,
-		duration: 5000
-	});
-	console.debug({target});
+
+	if (locID!='reset') { // open clicked accordion
+		fatherAcc.classList.add('opened');
+		let targetAcc = document.querySelector(`#location-list .location-item[data-location="${locID}"]`);
+		// open accordion
+		targetAcc.querySelector('input[name="panel"]').checked = true;
+		// scroll to accordion div 
+		targetAcc.scrollIntoView({ 
+			behavior: 'smooth' 
+		});
+		// muove mappa
+		map.flyTo({
+			center: [(targetAcc.dataset.lng - ShiftMap),targetAcc.dataset.lat],
+			essential: true,
+			zoom:16,
+			duration: 5000
+		});
+		console.debug({targetAcc});
+	} else {
+		fatherAcc.classList.remove('opened');
+		// reset mappa
+		// map.flyTo({
+		// 	center: [BaseCoords[0],BaseCoords[1]],
+		// 	essential: true,
+		// 	zoom:BaseZoom,
+		// 	duration: 2000
+		// });
+	}
+	
 }
 
 // eventuale parametro in url
@@ -315,18 +340,27 @@ const openAccordion = (locID) => {
 //carousel in pagina
 const carousel = document.querySelector('.CSScarousel');
 if (carousel) {
-	const loadJS = new Promise((resolve, reject) => {
-		const script = document.createElement('script');
-		document.body.appendChild(script);
-		script.onload = resolve;
-		script.onerror = reject;
-		script.async = true;
-		script.src = '/campi/wp-content/themes/campi/assets/js/CSScarousel.js';
-	});
-	loadJS.then(() => { 
+	fetchLoader({
+		src: Baseurl+'/wp-content/themes/campi/assets/js/CSScarousel.js',
+		async: true
+	}, "carousel_init")
+	.then(() => { 
 		console.debug('CSScarousel JS loaded.');
 		CSScarousel.setControls();
 	});
+
+	// const loadJS = new Promise((resolve, reject) => {
+	// 	const script = document.createElement('script');
+	// 	document.body.appendChild(script);
+	// 	script.onload = resolve;
+	// 	script.onerror = reject;
+	// 	script.async = true;
+	// 	script.src = '/campi/wp-content/themes/campi/assets/js/CSScarousel.js';
+	// });
+	// loadJS.then(() => { 
+	// 	console.debug('CSScarousel JS loaded.');
+	// 	CSScarousel.setControls();
+	// });
 }
 
 // ancore in aside sx
