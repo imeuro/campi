@@ -54,9 +54,20 @@ if ( is_page('luoghi') || is_page('locations') ) {
 				</label>
 				<div class="location-expand">
 					<p>
-						<?php echo $location['street_name']; ?>, <?php echo $location['street_number']; ?> - <?php echo $location['city']; ?> (<?php echo $location['state_short']; ?>) <?php echo $location['country']; ?>
+						<?php echo $location['street_name']; ?> 
+						<?php if ( array_key_exists('street_number', $location) ) : echo ', '.$location['street_number']; endif; ?> - 
+						<?php echo $location['city']; ?> 
+						<?php if ( array_key_exists('state_short', $location) ) : echo ' ('.$location['state_short'].') '; endif; ?> 
+						<?php echo $location['country']; ?>
 					</p>
+					
+
+					<div id="related-arts-carousel-<?php echo $terms[$i]->term_id; ?>" class="related-arts-carousel">
+						<?php the_opere_carousel( $terms[$i]->term_id ); ?>
+					</div>
 					<?php 
+					/*
+						//print_r($terms[$i]);
 						// foreach post in location...
 						$args = array(
 						'post_type' => 'post',
@@ -78,8 +89,9 @@ if ( is_page('luoghi') || is_page('locations') ) {
 								<?php
 									while ( $carousel_query->have_posts() ) {
 										$carousel_query->the_post();
+										//print_r($post);
 										$count++;
-										if ( has_post_thumbnail() ) {
+										if ( has_post_thumbnail($post) ) {
 									        echo '<li class="CSScarouselItem">'.get_the_post_thumbnail( $post->ID, $size = 'thumbnail', $attr = '' ) .'</li>';	
 									    } else {
 											// No post thumbnail, try attachments instead.
@@ -88,20 +100,18 @@ if ( is_page('luoghi') || is_page('locations') ) {
 													'post_type'      => 'attachment',
 													'post_mime_type' => 'image',
 													'post_parent'    => $post->ID,
-													'posts_per_page' => 1, /* Save memory, only need one */
+													'posts_per_page' => 1, 
 												)
 											);
 
 											if ( $images ) {
+												//print_r($images);
 											    $image = wp_get_attachment_image_src( $images[0]->ID, 'thumbnail' );
-											    echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'"><img src="' . $image[0].'" width="' . $image[1].'" height="' . $image[2].'" /></a></li>';
+											    echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'" title="'.$post->post_title.'"><img src="' . $image[0].'" width="' . $image[1].'" height="' . $image[2].'" alt="'.$post->name.'" /></a></li>';
+											} else {
+												echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'" title="'.$post->post_title.'"><img src="https://placehold.co/80x112/f8f8f8/0003?text=No image" width="80" height="112" alt="'.$post->name.'" /></a></li>';
 											}
 									    }
-
-										for ($k=$count; $k < 10; $k++) { // TEMP FILLER!!
-											$rnd = random_int(10, 25);
-											echo '<li class="CSScarouselItem"><img src="https://picsum.photos/80/112?random='.$rnd.'" /></li>';
-										}
 									}
 								?>
 
@@ -120,8 +130,9 @@ if ( is_page('luoghi') || is_page('locations') ) {
 							</div>
 
 						<?php
+						wp_reset_postdata();
 					}
-					wp_reset_postdata();
+					*/
 					?>
 
 

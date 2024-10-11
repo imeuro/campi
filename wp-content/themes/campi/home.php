@@ -58,7 +58,7 @@ get_header();
 				   	$image_ids = get_post_block_galleries_images( $post );
 				   	//print_r( $image_ids );
 
-				   	create_image_carousel( $image_ids );
+				   	the_HP_carousel( $image_ids );
 
 				}
 

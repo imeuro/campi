@@ -327,6 +327,7 @@ a:visited {
     font-size: 3vh;
     line-height: 1;
     font-weight: 500;
+    margin-bottom: calc(var(--spacer-unit)*1);
 	transition: padding 150ms ease-in-out;
 }
 
@@ -338,6 +339,8 @@ a:visited {
     transition: left 150ms ease-in-out;
 }
 .home .lang-switch li a.menu-lang svg {
+	width: 20px;
+    height: 20px;
 	position: relative;
 	right: 0;
 	transition: right 150ms ease-in-out;
@@ -364,8 +367,8 @@ a:visited {
 .home .site-main .page-subtitle {
     position: absolute;
     z-index: 10;
-    width: 33vw;
-    top: calc(var(--spacer-unit)*.5);
+    width: 160px;
+    top: calc(var(--spacer-unit)*1);
     left: calc(var(--spacer-unit)*1);
     font-size: 36px;
     font-size: 3vh;
@@ -427,7 +430,7 @@ a:visited {
 	.home .site-main .page-description {
 		bottom: 33vh;
 		right: calc(15vw + 30px);
-		width: 45vh;
+		width: 400px;
 	}
 }
 
@@ -566,6 +569,11 @@ section#luoghi-container .entry-header {
 .single article .entry-header {
 	animation: scheda-header 1s ease-in-out;
 	text-transform: none;
+}
+.single article .scheda-author {
+	display: block;
+	font-size: 18px;
+	margin-top: calc(var(--spacer-unit)* 1);
 }
 article .entry-content,
 #page .entry-content p {

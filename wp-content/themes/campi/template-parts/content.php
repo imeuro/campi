@@ -22,8 +22,9 @@
 					echo "<h2>$autore Campi</h2>";
 				}
 				$dati_principali = get_field('dati_principali',$post->ID);
+				get_field('dati_scheda',$post->ID) ? $dati_scheda = get_field('dati_scheda',$post->ID) : $dati_scheda = [];
 				// echo '<pre>';
-				// print_r($dati_principali);
+				// print_r($dati_scheda);
 				// echo '</pre>';
 
 				if ($dati_principali) {
@@ -34,8 +35,14 @@
 				
 					the_title( '<h1 class="entry-title"><em>', '</em>'.$data_opera.'</h1>' );
 					echo "<span>".$dati_principali['materiale_dimensioni']."</span>";
+					echo "<span>".$dati_principali['iscrizione']."</span>";
 
-				}	
+				}
+
+				// autore scheda
+				if ( array_key_exists('autore_scheda_opera', $dati_scheda) && !empty($dati_scheda['autore_scheda_opera']) ) :
+					echo '<small class="scheda-author">di '.$dati_scheda['autore_scheda_opera'].'</small>';
+				endif; 
 			}
 
 
@@ -44,33 +51,23 @@
 		}
 		?>
 
+
+
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-
+		<?php if (( array_key_exists('opere_collegate', $dati_scheda) && $dati_scheda['opere_collegate'] == 'true') ) : ?>
 		<div id="related-arts-carousel" class="related-arts-carousel">
 			<h4 class="section-heading smol">Opere collegate</h4>
-			<ul id="related" class="CSScarousel flex" data-passo="1">
-				<?php // temp!!
-					$rnd = random_int(10, 25);
-					for ($i=0; $i < $rnd; $i++) { 
-						echo '<li class="CSScarouselItem"><img src="https://picsum.photos/80/112?random='.$i.'" /></li>';
-					}
+				<?php 
+				$scheda_terms = wp_get_post_terms( $post->ID, 'luoghi' );
+				//print_r($scheda_terms);
+				$scheda_term = $scheda_terms[0]->term_id; // poi ne parliamo del [0]...
+
+				the_opere_carousel( $scheda_term );
 				?>
-			</ul>
-			<a class="CSScarouselPrev CSScarouselControl CSScarouselDisabled" data-target="#related">
-				<svg width="21" height="18">
-					<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
-				</svg>
-			</a>
-			<a class="CSScarouselNext CSScarouselControl" data-target="#related">
-				<svg width="21" height="18">
-					<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
-				</svg>
-
-			</a>
 		</div>
-
+		<?php endif; ?>
 
 
 		<?php

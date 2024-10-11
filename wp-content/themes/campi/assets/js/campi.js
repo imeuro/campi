@@ -214,7 +214,7 @@ const generateMapbox = () => {
 					'icon-allow-overlap': true,
 					'icon-ignore-placement': true,
 					'text-allow-overlap': false,
-					'text-ignore-placement': true,
+					'text-ignore-placement': false,
 					'text-optional': true,
 					'text-field': ['get', 'title'],
 					'text-variable-anchor': ['bottom-left'],

@@ -123,16 +123,17 @@ function add_defer_forscript( $tag, $handle, $src ) {
 add_filter( 'script_loader_tag', 'add_defer_forscript', 10, 3 );
 
 function campi_scripts() {
+	$rand = rand(0,999999);
 	wp_enqueue_style( 'campi-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'campi-style', 'rtl', 'replace' );
-    wp_enqueue_style( 'campi-style-custom', get_template_directory_uri() . '/assets/css/campi.css', array(), _S_VERSION );
+    wp_enqueue_style( 'campi-style-custom', get_template_directory_uri() . '/assets/css/campi.css', array(), $rand );
 
 	if (is_home() || is_front_page()) {
 		wp_enqueue_script( 'campi-mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js', array(), _S_VERSION, true );
 		wp_enqueue_style( 'campi-mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css', array(), _S_VERSION );
 	}
 
-	wp_enqueue_script( 'campi-general', get_template_directory_uri() . '/assets/js/campi.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'campi-general', get_template_directory_uri() . '/assets/js/campi.js', array(), $rand, true );
 	wp_enqueue_script( 'campi-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true );
 
 }
