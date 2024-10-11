@@ -232,6 +232,12 @@ const generateMapbox = () => {
 		});
 
 
+		// check for eventual hash in url and move directly to a pointer
+        const hashID = document.location.hash.slice(1);
+		if (allAcc && hashID != '') {
+			setTimeout( () => { openAccordion(hashID) },1000 );
+		}
+
 	});
 
 	let readmorelink;		
@@ -333,6 +339,10 @@ const openAccordion = (locID) => {
 }
 
 // eventuale parametro in url
+// const hashID = document.location.hash.slice(1);
+// if (allAcc && hashID != '') {
+// 	setTimeout( openAccordion(hashID),1000 );
+// }
 
 
 /* FOGLIA */

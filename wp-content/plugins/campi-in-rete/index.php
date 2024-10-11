@@ -30,7 +30,6 @@ function get_post_block_galleries_images( $post ) {
 }
 
 function the_HP_carousel( $img_ids ) {
-
 	$out = '<div class="imageslider">';
 	$i = 0;
 	foreach($img_ids as $imgid) {
@@ -39,10 +38,7 @@ function the_HP_carousel( $img_ids ) {
 		//print_r($imgData);
 		$out .= '<div class="box" data-index="'.$i.'"><img src="'.$imgData[0].'" width="'.$imgData[1].'" height="'.$imgData[2].'" loading="lazy" /></div>';
 	}
-
-
 	$out .= '</div>';
-
 	echo $out;
 }
 
@@ -66,9 +62,9 @@ function the_opere_carousel( $term_id ) {
 
 			
 		<ul id="related-<?php echo $term_id; ?>" class="CSScarousel flex" data-passo="1">
-
 		<?php
 			while ( $carousel_query->have_posts() ) {
+				// ...get an image and create a slide
 				global $post;
 				$carousel_query->the_post();
 				//print_r($post);
@@ -82,7 +78,7 @@ function the_opere_carousel( $term_id ) {
 							'post_type'      => 'attachment',
 							'post_mime_type' => 'image',
 							'post_parent'    => $post->ID,
-							'posts_per_page' => 1, /* Save memory, only need one */
+							'posts_per_page' => 1, // Save memory, only need one
 						)
 					);
 
@@ -96,7 +92,6 @@ function the_opere_carousel( $term_id ) {
 			    }
 			}
 		?>
-
 		</ul>
 		<a class="CSScarouselPrev CSScarouselControl CSScarouselDisabled" data-target="#related-<?php echo $term_id; ?>">
 			<svg width="21" height="18">
@@ -107,7 +102,6 @@ function the_opere_carousel( $term_id ) {
 			<svg width="21" height="18">
 				<use xlink:href="<?php echo get_template_directory_uri() . "/assets/campi-sprite.svg?cb=69632.88982883877#ico-triangle-carousel"?>"></use>
 			</svg>
-
 		</a>
 
 		<?php

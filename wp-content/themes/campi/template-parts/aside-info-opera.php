@@ -12,7 +12,13 @@
 		// print_r( $luoghi );
 		// echo '</pre>------';
 		foreach ($luoghi as $key => $luogo) {
-			echo '<li class="aside-location-name level_'.$key.'"><a href="'.get_term_link($luogo->term_id).'">'.$luogo->name.'</a></li>';
+			echo '<li class="aside-location-name level_'.$key.'">';
+			if ($key == 0) {
+				echo '<a href="'. home_url('/mappa/#'.$luogo->term_id).'">'.$luogo->name.'</a>';
+			} else {
+				echo $luogo->name;
+			}
+			echo '</li>';
 		}
 	?>
 </ul>
