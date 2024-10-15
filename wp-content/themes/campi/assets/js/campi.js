@@ -314,9 +314,12 @@ const openAccordion = (locID) => {
 		// open accordion
 		targetAcc.querySelector('input[name="panel"]').checked = true;
 		// scroll to accordion div 
-		targetAcc.scrollIntoView({ 
-			behavior: 'smooth' 
-		});
+		setTimeout(()=>{
+			targetAcc.scrollIntoView({ 
+				behavior: 'smooth' 
+			});
+		},1500)
+
 		// muove mappa
 		map.flyTo({
 			center: [(targetAcc.dataset.lng - ShiftMap),targetAcc.dataset.lat],
@@ -338,11 +341,6 @@ const openAccordion = (locID) => {
 	
 }
 
-// eventuale parametro in url
-// const hashID = document.location.hash.slice(1);
-// if (allAcc && hashID != '') {
-// 	setTimeout( openAccordion(hashID),1000 );
-// }
 
 
 /* FOGLIA */

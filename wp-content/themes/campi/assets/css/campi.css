@@ -669,6 +669,8 @@ article .entry-content figure.alignfull {
 	.related-arts-carousel { margin: calc(var(--spacer-unit)* 2) 0; }
 	.related-arts-carousel .CSScarousel {
 		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: flex-start;
 		gap: var(--spacer-unit);
 		margin: 0 calc(var(--spacer-unit)* 1.8);
 	}
@@ -755,6 +757,7 @@ article .entry-content figure.alignfull {
 
 #location-list .location-item {
 	margin-bottom: calc(var(--spacer-unit)* 1);
+	scroll-margin-top: calc(var(--spacer-unit)* 4);
 }
 #location-list .location-header {
 	display: inline-block;
