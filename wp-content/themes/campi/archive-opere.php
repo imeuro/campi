@@ -7,7 +7,7 @@
  * @package campi
  */
 
-/* Template Name: Home Autori */
+/* Template Name: Home Opere */
 
 get_header();
 ?>

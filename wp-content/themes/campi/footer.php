@@ -11,7 +11,7 @@
 
 ?>
 
-	<?php if (!is_front_page() && !is_single() && !is_page('autori')) : 
+	<?php if (!is_front_page() && !is_single() && !is_page('opere') && !is_page('artworks')) : 
 		$query_auth = get_terms( array(
 			'taxonomy' => 'autori',
 			'hide_empty' => false
