@@ -63,7 +63,7 @@ if ( is_page('luoghi') || is_page('locations') ) {
 					
 
 					<div id="related-arts-carousel-<?php echo $terms[$i]->term_id; ?>" class="related-arts-carousel">
-						<?php the_opere_carousel( $terms[$i]->term_id ); ?>
+						<?php the_opere_carousel( 'luoghi',$terms[$i]->term_id ); ?>
 					</div>
 
 				</div>

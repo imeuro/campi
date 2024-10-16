@@ -21,10 +21,24 @@ a, a:active, a:hover, a:visited { color: rgb(var(--nero)); }
 
 .mobile { display: block; }
 .desktop  { display: none; }
-@media all and (min-width: 768px) {
+.margin-top-header { 
+	margin-top: calc(var(--spacer-unit)*4); 
+}
+.line-clamp {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2; /* number of lines to show */
+	line-clamp: 2;
+}
+@media all and (min-width: 1000px) {
 	.mobile { display: none; }
 	.desktop  { display: block; }
 }
+
+
+
 
 /* @font-face {
   font-family: 'FAMILY_NAME';
@@ -36,17 +50,20 @@ a, a:active, a:hover, a:visited { color: rgb(var(--nero)); }
 @font-face {
   font-family: 'FTAktualBook';
   src: url('../font/FTAktual-Book.woff2') format('woff2'), url('../font/FTAktual-Book.woff') format('woff');
+  font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'FTAktualBookItalic';
   src: url('../font/FTAktual-BookItalic.woff2') format('woff2'), url('../font/FTAktual-BookItalic.woff') format('woff');
+  font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'FTAktualSemibold';
-  src: url('../font/FTAktualSemibold.woff2') format('woff2'), url('../font/FTAktualSemibold.woff') format('woff');
+  src: url('../font/FTAktual-Semibold.woff2') format('woff2'), url('../font/FTAktual-Semibold.woff') format('woff');
+  font-weight: 700;
   font-display: swap;
 } 
 
@@ -164,7 +181,7 @@ nav#site-navigation a.nav-menu-map {
 }
 nav#site-navigation a.nav-menu-map svg { margin-right: 10px; }
 
-@media all and (min-width: 768px) {
+@media all and (min-width: 1000px) {
 	.menu-toggle { display: block; }
 
 	nav#site-navigation {
@@ -225,6 +242,20 @@ nav#site-navigation a.nav-menu-map svg { margin-right: 10px; }
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   max-width: 100vw;
+  transform: translateZ(0);
+  will-change: transform;
+}
+.CSScarousel.vertical {
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100vw;
+  max-height: 100vh;
   transform: translateZ(0);
   will-change: transform;
 }
@@ -651,7 +682,8 @@ article .entry-content figure.alignfull {
 
 	#page section#luoghi-container #close-container,
 	#page section#luoghi-container.opened #close-container {
-		right: 75px;
+		right: 60px;
+        top: 15px;
 	}
 
 
@@ -756,7 +788,7 @@ article .entry-content figure.alignfull {
 /* ARCHIVES */
 
 #location-list .location-item {
-	margin-bottom: calc(var(--spacer-unit)* 1);
+	margin-bottom: calc(var(--spacer-unit)* .5);
 	scroll-margin-top: calc(var(--spacer-unit)* 4);
 }
 #location-list .location-header {
@@ -765,9 +797,8 @@ article .entry-content figure.alignfull {
 	height: auto;
 	font-size: 16px;
 	line-height: 1;
+	margin-bottom: 0;
 	padding-bottom: calc(var(--spacer-unit)* .5);
-	margin-bottom: calc(var(--spacer-unit)* .5);
-	/* border-bottom: 1px solid rgba(var(--nero),.5); */
 	position: relative;
 	cursor: pointer;
 }
@@ -782,8 +813,10 @@ article .entry-content figure.alignfull {
     transition: transform 100ms ease-out;
 }
 #location-list .location-header .location-name {
-    font-weight: 500;
-    font-size: 18px;
+	font-family: 'FTAktualSemibold', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-right: 35px;
 }
 #location-list .location-expand {
 	height: 0;
@@ -792,7 +825,7 @@ article .entry-content figure.alignfull {
 	transition: height 300ms ease-out, border 300ms ease-out;
 }
 #location-list input[name='panel']:checked ~ .location-expand {
-	height: 220px;
+	height: 180px;
 	border-bottom: 1px solid rgba(var(--nero),.5);
 }
 #location-list input[name='panel']:checked ~ .location-header:after {
@@ -801,6 +834,127 @@ article .entry-content figure.alignfull {
 #location-list .location-expand .related-arts-carousel { margin: calc(var(--spacer-unit)* 1) 0; }
 #location-list .location-expand .related-arts-carousel .CSScarouselPrev, 
 #location-list .location-expand .related-arts-carousel .CSScarouselNext { top: 5px; }
+
+
+
+/* AUTORI */
+#authors-archive {
+	flex-flow: column nowrap;
+	gap: calc(var(--spacer-unit)* 1);
+}
+#authors-archive .campi-autori {
+	font-family: 'FTAktualSemibold',sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+#authors-archive .related-arts-carousel { 
+	margin: 0;
+	width: 100%;
+    justify-content: flex-start;
+}
+
+#authors-archive ul.CSScarousel { 
+	position: relative;
+    margin: calc(var(--spacer-unit)* 1) calc(var(--spacer-unit)* -1);
+    padding: 0;
+    flex-flow: row nowrap;
+    gap: calc(var(--spacer-unit)* 1);
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#authors-archive ul.CSScarousel .CSScarouselItem,
+#authors-archive ul.CSScarousel .CSScarouselItem img {
+    width: 112px;
+}
+#authors-archive ul.CSScarousel .CSScarouselItem:first-of-type {
+    scroll-margin-left: var(--spacer-unit);
+    margin-left: var(--spacer-unit);
+    scroll-snap-align: center;
+}
+#authors-archive ul.CSScarousel a { 
+	text-decoration: none;
+}
+#authors-archive ul.CSScarousel .entry-caption {
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2;
+   font-weight: 500;
+   font-size: 13px;
+   line-height: 15px;
+    text-align: center;
+    margin: calc(var(--spacer-unit)* .5);
+}
+@media all and (min-width: 1000px) {
+	#authors-archive {
+		flex-flow: row nowrap;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: calc(var(--spacer-unit)* 1);
+		width: calc(100vw - 100px);
+		height: calc(100dvh - 145px);
+	}
+	#authors-archive .related-arts-carousel { 
+		flex: 0 0 calc(25vw - 25px - calc(var(--spacer-unit)* 1));
+
+	}
+	#authors-archive ul.CSScarousel {
+		flex-flow: column nowrap;
+		height: calc(100dvh - 255px);
+		margin: 55px calc(var(--spacer-unit)* 0);
+	}
+	#authors-archive ul.CSScarousel .CSScarouselItem {
+		width: calc(25vw - 60px);
+	}
+	#authors-archive ul.CSScarousel .CSScarouselItem:first-of-type {
+		scroll-margin-left: 0;
+		margin-left: 0;		
+		scroll-margin-top: var(--spacer-unit);
+		margin-top: var(--spacer-unit);
+	    scroll-snap-align: center;
+	}
+	#authors-archive ul.CSScarousel a {
+		display: flex;
+		gap: calc(var(--spacer-unit)* .5);
+	}	
+	#authors-archive ul.CSScarousel img.entry-thumb {
+		flex: 0 0 80px;
+	}	
+	#authors-archive ul.CSScarousel .entry-caption {
+		flex: 1 0 calc(25vw - 150px);
+		text-align: left;
+		font-family: 'FTAktualBook',sans-serif;
+		font-size: 13px;
+	}	
+	#authors-archive ul.CSScarousel .entry-caption .entry-title {
+		flex: 1 0 calc(25vw - 150px);
+		font-family: 'FTAktualBookItalic',sans-serif;
+	}
+	#authors-archive ul.CSScarousel .entry-caption .entry-data {
+		font-style: normal;
+		display: block;
+		margin-top: calc(var(--spacer-unit)* .25);
+	}
+
+	.related-arts-carousel .vertical ~ .CSScarouselPrev,
+	.related-arts-carousel .vertical ~ .CSScarouselNext {
+		transform: rotate(-90deg);
+		position: absolute;
+        top: 0;
+        left: calc(50%);
+	}
+		.related-arts-carousel .vertical ~ .CSScarouselNext {
+		transform: rotate(90deg);
+		top: initial;
+		bottom: -20px;
+	}
+
+}
+
+
+
+
+
+
 
 
 /* FOOTER */

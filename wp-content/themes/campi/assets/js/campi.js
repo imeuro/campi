@@ -262,10 +262,7 @@ const generateMapbox = () => {
 	});
 
 	map.on('click', 'locations', () => {
-
-
 	 	openAccordion(locID);
-
 	});
 
 	map.on('mouseleave', 'locations', () => {
@@ -285,6 +282,7 @@ if (allAcc) {
 	Array.from(allAcc).forEach(function (d, index) {
 		d.addEventListener('click', () => {
 			openAccordion(d.dataset.location);
+			// d.classList.add('open');
 			d.scrollIntoView({ 
 				behavior: 'smooth' 
 			});
@@ -306,28 +304,44 @@ const openAccordion = (locID) => {
 	// reset accordions
 	Array.from(allAcc).forEach(function (d, index) {
 		d.querySelector('input[name="panel"]').checked = false;
+		d.classList.remove('open');
 	});
 
 	if (locID!='reset') { // open clicked accordion
 		fatherAcc.classList.add('opened');
 		let targetAcc = document.querySelector(`#location-list .location-item[data-location="${locID}"]`);
-		// open accordion
-		targetAcc.querySelector('input[name="panel"]').checked = true;
-		// scroll to accordion div 
-		setTimeout(()=>{
-			targetAcc.scrollIntoView({ 
-				behavior: 'smooth' 
-			});
-		},1500)
+		if (targetAcc.classList.contains('open')) {
 
-		// muove mappa
-		map.flyTo({
-			center: [(targetAcc.dataset.lng - ShiftMap),targetAcc.dataset.lat],
-			essential: true,
-			zoom:16,
-			duration: 5000
-		});
+			// close accordion
+			targetAcc.querySelector('input[name="panel"]').checked = false;
+			targetAcc.classList.remove('open');
+
+		} else {
+
+			// open accordion
+			targetAcc.querySelector('input[name="panel"]').checked = true;
+			targetAcc.classList.add('open');
+
+			// scroll to accordion div 
+			setTimeout(()=>{
+				targetAcc.scrollIntoView({ 
+					behavior: 'smooth' 
+				});
+			},1500)
+
+			// muove mappa
+			map.flyTo({
+				center: [(targetAcc.dataset.lng - ShiftMap),targetAcc.dataset.lat],
+				essential: true,
+				zoom:16,
+				duration: 5000
+			});	
+
+		}
+
+		// targetAcc.classList.toggle('open');
 		console.debug({targetAcc});
+
 	} else {
 		fatherAcc.classList.remove('opened');
 		// reset mappa

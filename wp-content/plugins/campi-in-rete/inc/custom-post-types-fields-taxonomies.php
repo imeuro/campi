@@ -79,7 +79,7 @@ function campi_register_tax_autori() {
         "show_in_menu" => false,
         "show_in_nav_menus" => false,
         "query_var" => true,
-        "rewrite" => [ 'slug' => 'autori', 'with_front' => true, ],
+        "rewrite" => [ 'slug' => 'autori', 'with_front' => true, 'hierarchical' => true ],
         "show_admin_column" => false,
         "show_in_rest" => true,
         "show_tagcloud" => false,

@@ -133,7 +133,7 @@ function campi_scripts() {
 		wp_enqueue_style( 'campi-mapbox', 'https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css', array(), _S_VERSION );
 	}
 
-	wp_enqueue_script( 'campi-general', get_template_directory_uri() . '/assets/js/campi.js', array(), $rand, true );
+	wp_enqueue_script( 'campi-general', get_template_directory_uri() . '/assets/js/campi.js', array(), '$rand', true );
 	wp_enqueue_script( 'campi-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true );
 
 }

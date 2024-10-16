@@ -44,13 +44,15 @@ function the_HP_carousel( $img_ids ) {
 
 
 
-function the_opere_carousel( $term_id ) {
+function the_opere_carousel( $tax,$term_id,$options='',$direction='horizontal' ) {
+	// $options = 'withcaptions' ...
+
 	// foreach post in location...
 		$args = array(
 		'post_type' => 'post',
 		'tax_query' => array(
 			array(
-			'taxonomy' => 'luoghi',
+			'taxonomy' => $tax,
 			'field' => 'term_id',
 			'terms' => $term_id
 			))
@@ -61,7 +63,7 @@ function the_opere_carousel( $term_id ) {
 		?>
 
 			
-		<ul id="related-<?php echo $term_id; ?>" class="CSScarousel flex" data-passo="1">
+		<ul id="related-<?php echo $term_id; ?>" class="CSScarousel <?php echo $direction; ?> flex" data-passo="1">
 		<?php
 			while ( $carousel_query->have_posts() ) {
 				// ...get an image and create a slide
@@ -69,8 +71,11 @@ function the_opere_carousel( $term_id ) {
 				$carousel_query->the_post();
 				//print_r($post);
 				$count++;
+
+				echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'" title="'.$post->post_title.'">';
+
 				if ( has_post_thumbnail($post) ) {
-			        echo '<li class="CSScarouselItem">'.get_the_post_thumbnail( $post->ID, $size = 'thumbnail', $attr = '' ) .'</li>';	
+			        echo get_the_post_thumbnail( $post->ID, $size = 'thumbnail', $attr = 'array("class" => "entry-thumb")' );	
 			    } else {
 					// No post thumbnail, try attachments instead.
 					$images = get_posts(
@@ -82,14 +87,34 @@ function the_opere_carousel( $term_id ) {
 						)
 					);
 
+
 					if ( $images ) {
 						//print_r($images);
 					    $image = wp_get_attachment_image_src( $images[0]->ID, 'thumbnail' );
-					    echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'" title="'.$post->post_title.'"><img src="' . $image[0].'" width="' . $image[1].'" height="' . $image[2].'" alt="'.$post->name.'" /></a></li>';
+					    echo '<img src="' . $image[0].'" width="' . $image[1].'" height="' . $image[2].'" alt="'.$post->post_title.'" class="entry-thumb" />';
 					} else {
-						echo '<li class="CSScarouselItem"><a href="'.get_permalink($post->ID).'" title="'.$post->post_title.'"><img src="https://placehold.co/80x112/f8f8f8/0003?text=No image" width="80" height="112" alt="'.$post->name.'" /></a></li>';
+						echo '<img src="https://placehold.co/80x112/f8f8f8/0003?text=No image" width="80" height="112" alt="'.$post->post_title.'" class="entry-thumb" />';
 					}
 			    }
+
+			    if ($options=='withcaptions') {
+			    	$dati_principali = get_field('dati_principali',$post->ID);
+
+			    	echo '<div class="entry-caption">';
+			    	echo '<h3 class="entry-title line-clamp">'.get_the_title().'</h3>';
+			    	if ($dati_principali) {
+
+						$sep1 = ($dati_principali['anno_inizio'] || $dati_principali['anno_fine']) ? ', ' : '';
+						$sep2 = ($dati_principali['anno_inizio'] && $dati_principali['anno_fine']) ? '-' : '';
+						$data_opera = $dati_principali['anno_inizio'].$sep2.$dati_principali['anno_fine'];
+
+			    		echo '<small class="entry-data desktop">'.$data_opera.'<br>'.$dati_principali['materiale_dimensioni'].'</small>';
+			    	}
+			    	echo '</div>';
+			    }
+
+			    echo '</a></li>';
+
 			}
 		?>
 		</ul>
