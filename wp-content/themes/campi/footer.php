@@ -13,8 +13,11 @@
 
 	<?php if (!is_front_page() && !is_single() && !is_page('opere') && !is_page('artworks')) : 
 		$query_auth = get_terms( array(
-			'taxonomy' => 'autori',
-			'hide_empty' => false
+			'taxonomy'		=> 'autori',
+			'meta_key'		=> 'ordine_apparizione',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+			'hide_empty'	=> false
 		) );
 	?>
 	<footer id="footer" class="site-footer flex">

@@ -942,10 +942,14 @@ article .entry-content figure.alignfull {
         top: 0;
         left: calc(50%);
 	}
-		.related-arts-carousel .vertical ~ .CSScarouselNext {
+	.related-arts-carousel .vertical ~ .CSScarouselNext {
 		transform: rotate(90deg);
 		top: initial;
 		bottom: -20px;
+	}
+	.related-arts-carousel .vertical ~ .CSScarouselPrev.CSScarouselDisabled,
+	.related-arts-carousel .vertical ~ .CSScarouselNext.CSScarouselDisabled {
+		opacity: 0;
 	}
 
 }

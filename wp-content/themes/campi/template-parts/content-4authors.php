@@ -8,8 +8,11 @@
  */
 
 $query_auth = get_terms( array(
-	'taxonomy' => 'autori',
-	'hide_empty' => false
+	'taxonomy'		=> 'autori',
+	'meta_key'		=> 'ordine_apparizione',
+	'orderby'		=> 'meta_value_num',
+	'order'			=> 'ASC',
+	'hide_empty'	=> false
 ) );
 
 if ( ! empty( $query_auth ) ) {
